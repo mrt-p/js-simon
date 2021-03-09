@@ -9,8 +9,25 @@ $(document).ready(function(){
   intervallo = setInterval(function(){
     document.getElementById("secondi").innerHTML = "Tempo a disposizione: " + sec;
     if (sec == 0) {
-      alert("Tempo scaduto");
       clearInterval(intervallo);
+      $('#numeri').css({display:'none'});
+      var numeriUtente = [];
+      var numeriCorretti = [];
+      var numeriSbagliati = [];
+      for (i=0; i<5; i++) {
+        var numeroUtente = parseInt(prompt("Inserisci i numeri memorizzati: "));
+        numeriUtente.push(numeroUtente);
+
+        if (isInArray(randomNumbers, numeroUtente) == true)  {
+          numeriCorretti.push(numeroUtente);
+          document.getElementById("punteggio_giusto").innerHTML = "Hai indovinato questi numeri: " + numeriCorretti;
+        }
+        else {
+          numeriSbagliati.push(numeroUtente);
+          document.getElementById("punteggio_sbagliato").innerHTML = "Hai sbagliato questi numeri: " + numeriSbagliati;
+        }
+      }
+      console.log(numeriUtente);
     }
     else {
       sec--;
@@ -24,7 +41,17 @@ $(document).ready(function(){
     var interval;
 
     document.getElementById("numeri").innerHTML = "Memorizza questi numeri: " + randomNumbers;
-
   }
 
 });
+
+
+function isInArray (array, value) {
+
+  for (var i=0; i < array.length; i++) {
+    if (value == array[i]) {
+      return true;
+    }
+  }
+  return false;
+}
